@@ -207,7 +207,7 @@ sub upload_data {
 sub open_species_homepage {
   my ($self) = @_;
   my $sel = $self->sel;
-  $sel->open("$sel->{browser_url}/info/about/species.html");
+  $sel->open("$sel->{browser_url}/info/website/species.html");
 
   $sel->click_ok(sprintf "//a[contains(\@href,'%s/Info/Index')]", $self->conf('species'))
   and $sel->ensembl_wait_for_page_to_load_ok;
