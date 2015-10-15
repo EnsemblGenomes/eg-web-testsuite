@@ -138,9 +138,8 @@ sub test_attach_bam {
   and $sel->click_ok($sel->is_text_present('Add your data') ? 'link=Add your data' : 'link=Manage your data')
   and $sel->ensembl_wait_for_ajax_ok
   and $sel->pause(10000)
-  and $sel->select("format", "BAM")
-  and $sel->pause
-  and $sel->type_ok("name=url_2", $bam_url)
+  and $sel->type_ok("name=text", $bam_url)
+  and $sel->pause(10000)
   and $sel->click_ok("name=submit_button")
   and $sel->ensembl_wait_for_ajax_ok(100000,10000) #timeout=50s and pause=10s
   and $sel->pause
