@@ -50,29 +50,6 @@ sub test_search_species {
   and $sel->is_element_present_ok("//div[\@class='hit']");
 }
 
-sub test_attach_das {
-  my ($self) = @_;
-
-  my $sel = $self->sel;
-  $self->open_species_homepage
-  and $sel->click_ok("link=Example region");
-  $sel->ensembl_wait_for_page_to_load_ok();
-  $sel->click_ok($sel->is_text_present('Add your data') ? 'link=Add your data' : 'link=Manage your data')
-  and $sel->pause(10000),
-  and $sel->click_ok("link=Attach DAS")
-  and $sel->pause(10000),
-  and $sel->ensembl_wait_for_ajax
-  and $sel->type_ok("name=other_das", "http://www.ebi.ac.uk/das-srv/proteindas/das")
-  and $sel->pause
-  and $sel->click_ok("wizard_submit")
-  and $sel->ensembl_wait_for_ajax
-  and $sel->pause(10000)
-  and $sel->click_ok("//div[\@id='DasSources']//input[\@type='checkbox'][1]") # tick first das source
-  and $sel->click_ok("wizard_submit")
-  and $sel->wait_for_text_present_ok("The following DAS sources have now been attached")
-  and $sel->click_ok("//div[\@class='modal_close']");
-}
-
 sub test_nav_links {
   my $self = shift;
   my $sel = $self->sel;
@@ -133,9 +110,7 @@ sub test_attach_bam {
   $self->open_species_homepage
   and $sel->click_ok("link=Example region")
   and $sel->ensembl_wait_for_page_to_load_ok()
-  and $sel->click_ok("link=Configure this page")
-  and $sel->ensembl_wait_for_ajax_ok(undef,10000)
-  and $sel->click_ok($sel->is_text_present('Add your data') ? 'link=Add your data' : 'link=Manage your data')
+  and $sel->click_ok('link=Custom tracks')
   and $sel->ensembl_wait_for_ajax_ok
   and $sel->pause(10000)
   and $sel->type_ok("name=text", $bam_url)
@@ -189,7 +164,7 @@ sub upload_data {
   my ($self, $format, $name, $data) = @_;
   my $sel = $self->sel;
   print "Uploading $format data: $name\n";
-  $sel->click_ok($sel->is_text_present('Add your data') ? 'link=Add your data' : 'link=Manage your data')
+  $sel->click_ok('link=Custom tracks')
   and $sel->pause(10000)
   and $sel->click_ok('link=Add your data')
   and $sel->pause(10000)
