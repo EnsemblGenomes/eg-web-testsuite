@@ -97,7 +97,7 @@ $chr\tEnsembl\ttranscript\t$s\t$e\t.\t-\t.\tID=TEST;Name=TEST;Parent=TEST;biotyp
 $chr\tEnsembl\texon\t$s\t$e\t.\t-\t0\tName=TEST.1;Parent=TEST
     };
     
-    $self->upload_data('GFF', 'example_gff3', $data);
+    $self->upload_data('GFF3', 'example_gff3', $data);
   }
 }
 
@@ -166,12 +166,13 @@ sub upload_data {
   print "Uploading $format data: $name\n";
   $sel->click_ok('link=Custom tracks')
   and $sel->pause(10000)
-  and $sel->click_ok('link=Add your data')
+  and $sel->click_ok('link=Add more data')
+  and $sel->pause(10000)
+  and $sel->type_ok("name=name", $name)
+  and $sel->type_ok("name=text", $data)
   and $sel->pause(10000)
   and $sel->select_ok("name=format", "label=$format")
   and $sel->ensembl_wait_for_ajax_ok
-  and $sel->type_ok("name=name", $name)
-  and $sel->type_ok("name=text", $data)
   and $sel->click_ok("name=submit_button")
   and $sel->wait_for_text_present_ok("Go to nearest region with data")
   and $sel->click_ok("xpath=//div[\@id='UploadParsed']//a") # click the first region link
