@@ -174,7 +174,7 @@ sub upload_data {
   and $sel->select_ok("name=format", "label=$format")
   and $sel->ensembl_wait_for_ajax_ok
   and $sel->click_ok("name=submit_button")
-  and $sel->wait_for_text_present_ok("Go to nearest region with data")
+  and $sel->wait_for_text_present_ok("region with data")
   and $sel->click_ok("xpath=//div[\@id='UploadParsed']//a") # click the first region link
   and $sel->ensembl_wait_for_ajax_ok;
 }
