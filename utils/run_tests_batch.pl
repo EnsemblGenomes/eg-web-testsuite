@@ -1,7 +1,8 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 
 use strict;
-use lib '../modules';
+use FindBin qw($Bin);
+use lib "$Bin/../modules";
 use Getopt::Long;
 use Class::Inspector;
 use Data::Dumper;
