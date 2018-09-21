@@ -1,6 +1,6 @@
 package EnsEMBL::Selenium::Test::EGCommon;
 use strict;
-use base 'EnsEMBL::Selenium::Test';
+use base 'EnsEMBL::Selenium::Test::Base';
 use Test::More;
 
 __PACKAGE__->set_default('timeout', 50000);
@@ -146,51 +146,6 @@ sub test_export_data {
   #and $sel->click_ok("link=HTML")                                                 # can't do this as opens in new window, so...
   and $sel->open_ok( $sel->get_attribute(q{//div[@id='Formats']//li[1]/a/@href}) ) # get href and open the url in current window
   and $sel->ensembl_wait_for_ajax_ok;
-}
-
-#------------------------------------------------------------------------------
-# FUNCTIONS
-#------------------------------------------------------------------------------
-
-sub check_live {
-  my $self = shift;
-  if (!$self->conf('live')) {
-    print "Skipping - this test only runs in live environment (use --live)\n";
-  }
-  return $self->conf('live');
-}
-
-sub upload_data {
-  my ($self, $format, $name, $data) = @_;
-  my $sel = $self->sel;
-  print "Uploading $format data: $name\n";
-  $sel->click_ok('link=Custom tracks')
-  and $sel->pause(10000)
-  and $sel->click_ok('link=Add more data')
-  and $sel->pause(10000)
-  and $sel->type_ok("name=name", $name)
-  and $sel->type_ok("name=text", $data)
-  and $sel->pause(10000)
-  and $sel->select_ok("name=format", "label=$format")
-  and $sel->ensembl_wait_for_ajax_ok
-  and $sel->click_ok("name=submit_button")
-  and $sel->wait_for_text_present_ok("region with data")
-  and $sel->click_ok("xpath=//div[\@id='UploadParsed']//a") # click the first region link
-  and $sel->ensembl_wait_for_ajax_ok;
-}
-
-sub open_species_homepage {
-  my ($self) = @_;
-  my $sel = $self->sel;
-  $sel->open($sel->{browser_url} . '/' . $self->conf('species'))
-  and $sel->ensembl_wait_for_page_to_load_ok;
-}
-
-sub click_link {
-  my ($self, $locator, $timeout) = @_;
-  my $sel = $self->sel;
-  $sel->click_ok($locator)
-  and $sel->ensembl_wait_for_page_to_load_ok($timeout || $self->conf('timeout'));
 }
 
 1;
