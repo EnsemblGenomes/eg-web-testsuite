@@ -9,7 +9,7 @@ my $module;
 my $url;
 my $host = 'localhost'; 
 my $port = '4444';
-my $browser = '*firefox';
+my $browser = '*googlechrome';
 my @test;
 my @skip;
 my $verbose;
